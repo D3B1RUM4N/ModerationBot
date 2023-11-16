@@ -1,0 +1,19 @@
+const Discord = require('discord.js')
+
+module.exports = async (client, message) => {
+
+  let prefix = "?"
+
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
+
+  let args = message.content.slice(prefix.length).trim().split(/ +/);
+  let commandName = args.shift().toLowerCase();
+
+  try {
+    let command = require(`../Commands/${commandName}`);
+    command.run(client, message, args);
+  } catch (err) {
+    console.error(err);
+    message.reply(`cette commande n'existe pas`);
+  }
+}
