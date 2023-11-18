@@ -7,6 +7,7 @@ const config = require('./config')
 //const loadCommands = require('./loader/loadCommands')
 const loadEvents = require('./loader/loadEvents')
 const loadCommands = require('./loader/loadCommands')
+const stupid = require('./stupid')
 
 
 
@@ -15,6 +16,16 @@ client.commands = new Discord.Collection()
 //magenta hexa : #FF00FF
 client.color = "#FF00FF";
 
+
+//les reponses stupides
+client.on('messageCreate', message => {
+    if(message.author.bot) return
+    if(message.content.startsWith("/")) return
+    //redirigé vers le fichier stupid.js
+    stupid(message)
+})
+
+
 client.login(config.token)
 loadEvents(client)
 loadCommands(client)
@@ -22,3 +33,5 @@ loadCommands(client)
 
 
 console.log("\n")
+
+
