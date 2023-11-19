@@ -15,12 +15,16 @@ const stupid = require('./stupid')
 client.commands = new Discord.Collection()
 //magenta hexa : #FF00FF
 client.color = "#FF00FF";
+client.function = {
+    createID: require('./Functions/createID')
+}
 
-
+const lienRegex = /https?:\/\/\S+/;
 //les reponses stupides
 client.on('messageCreate', message => {
     if(message.author.bot) return
     if(message.content.startsWith("/")) return
+    if(lienRegex.test(message.content)) return
     //redirigé vers le fichier stupid.js
     stupid(message)
 })
