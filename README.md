@@ -1,11 +1,6 @@
+you need to install dependency <br>
 commands : 
-npm init
-npm i discord.js
-npm i fs
-npm install node-schedule
-npm i @discordjs/rest
-npm i ms
-npm i mysql
+``npm install``
 
-
-pour executer : node main
+pour executer : 
+``node main``

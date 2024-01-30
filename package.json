@@ -1,6 +1,6 @@
 {
-  "name": "devilman",
-  "version": "1.0.0",
+  "name": "moderationbot",
+  "version": "2.0.0",
   "description": "bot pour Nyastre",
   "main": "main.js",
   "scripts": {
@@ -16,5 +16,16 @@
     "mysql": "^2.18.1",
     "node-schedule": "^2.1.1",
     "sqlite3": "^5.1.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/D3B1RUM4N/ModerationBot.git"
+  },
+  "keywords": [
+    "moderation"
+  ],
+  "bugs": {
+    "url": "https://github.com/D3B1RUM4N/ModerationBot/issues"
+  },
+  "homepage": "https://github.com/D3B1RUM4N/ModerationBot#readme"
 }
