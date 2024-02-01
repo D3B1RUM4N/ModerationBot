@@ -13,8 +13,9 @@ module.exports = async client => {
     await loadSlashCommands(client)
 
     //set activity
-    client.user.setActivity(" /help", {type : "LISTENING"}) //PLAYING, STREAMING, LISTENING, WATCHING, CUSTOM_STATUS 
-    
+    client.user.setActivity(" /help", { type: "LISTENING" }) //PLAYING, STREAMING, LISTENING, WATCHING, CUSTOM_STATUS 
+
     console.log(`${client.user.tag} est bien en ligne !`)
     logs.log(`${client.user.tag} est bien en ligne !`)
+    console.log(`done`)
 }
