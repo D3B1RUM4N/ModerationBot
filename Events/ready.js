@@ -12,8 +12,14 @@ module.exports = async client => {
 
     await loadSlashCommands(client)
 
-    //set activity
-    client.user.setActivity(" /help", { type: "LISTENING" }) //PLAYING, STREAMING, LISTENING, WATCHING, CUSTOM_STATUS 
+    client.user.setPresence({
+        activities: [{
+            status: 'dnd',
+            name: `/Help -> Liste des commandes`,
+            type: Discord.ActivityType.Watching,
+            url: 'https://discord.gg/acPCHR5Yqu'
+        }],
+    });
 
     console.log(`${client.user.tag} est bien en ligne !`)
     logs.log(`${client.user.tag} est bien en ligne !`)
