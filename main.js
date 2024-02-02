@@ -29,10 +29,6 @@ client.on('messageCreate', message => {
     stupid(message)
 })
 
-// client.on('guildCreate', (guild) => {
-//     console.log(`Le bot a rejoint le serveur : ${guild.name} (ID: ${guild.id})`);
-//     // Vous pouvez ajouter ici des actions supplémentaires à effectuer lorsque le bot rejoint un serveur
-// });
 
 
 client.login(config.token)
