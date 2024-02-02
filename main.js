@@ -7,7 +7,6 @@ const config = require('./config')
 //const loadCommands = require('./loader/loadCommands')
 const loadEvents = require('./loader/loadEvents')
 const loadCommands = require('./loader/loadCommands')
-const stupid = require('./stupid')
 
 
 
@@ -19,15 +18,6 @@ client.function = {
     createID: require('./Functions/createID')
 }
 
-const lienRegex = /https?:\/\/\S+/;
-//les reponses stupides
-client.on('messageCreate', message => {
-    if (message.author.bot) return
-    if (message.content.startsWith("/")) return
-    if (lienRegex.test(message.content)) return
-    //redirigé vers le fichier stupid.js
-    stupid(message)
-})
 
 
 
