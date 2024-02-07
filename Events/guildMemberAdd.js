@@ -2,23 +2,25 @@ const Discord = require('discord.js')
 
 module.exports = async (client, member) => {
     let channel
-    try {
+    const channelID = '1202892373810614302';
 
-        await client.db.each('SELECT * from Welcome where serverID = ?', [member.guild.id], (err, rows) => {
-            if (!rows) {
-                console.log("No channel found")
-                return
-            } else {
-                console.log("rows : " + rows.channelID)
-                channel = member.guild.channels.cache.get(1202892373810614302)
-            }
-        });
+    try {
+        const rows = await client.db.get('SELECT * from Welcome where serverID = ?', [member.guild.id]);
+        if (!rows) {
+            console.log("No channel found");
+            return;
+        }
+
+        console.log("rows : " + rows.channelID); // Assurez-vous que rows.channelID est un nombre
+        const channel = await client.channels.fetch(channelID);
+        console.log("Fetched channel : " + channel.name);
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 
+
     if (!channel) {
-        console.log("No channel found")
+        console.log(`no channel found with : ${channelID}`)
         return;
     }
 
