@@ -32,7 +32,15 @@ module.exports = {
         if (!channel) return message.reply("Salon invalide")
 
         let role = args.getRole("role")
-        if (!role) role = null
+        if (!role) {
+            role = message.guild.roles.everyone
+        } else {
+            const member = message.guild.members.cache.get(client.user.id); // Récupère le membre du bot dans le serveur
+            if (role && role.comparePositionTo(member.roles.highest) >= 0) return message.reply("Je ne peux pas donner ce role")
+        }
+
+
+
 
 
 
