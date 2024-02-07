@@ -14,6 +14,13 @@ module.exports = {
             description: "Salon bienvenue",
             required: true,
             autocomplete: true
+        },
+        {
+            type: "role",
+            name: "role",
+            description: "Role à donner",
+            required: false,
+            autocomplete: true
         }
     ],
 
@@ -24,16 +31,19 @@ module.exports = {
         let channel = args.getChannel("salon")
         if (!channel) return message.reply("Salon invalide")
 
+        let role = args.getRole("role")
+        if (!role) role = null
+
 
 
         try {
             await db.run(`DELETE FROM Welcome WHERE serverID = ?`, [message.guild.id])
 
-            db.run(`INSERT INTO Welcome (channelID, serverID) VALUES (?, ?)`, [channel.id, message.guild.id])
+            db.run(`INSERT INTO Welcome (channelID, roleID, serverID) VALUES (?, ?, ?)`, [channel.id, role.id, message.guild.id])
         } catch (err) {
             return message.reply("Erreur sur la base de donnée, veuillez réessayer plus tard")
         }
 
-        await message.reply(`Salon de bienvenue défini sur #${channel.name}`)
+        await message.reply(`Salon de bienvenue défini sur #${channel.name} ${role ? `avec le role ${role.name}` : ""}`)
     }
 }
