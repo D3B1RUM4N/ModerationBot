@@ -8,8 +8,6 @@ module.exports = async (client, member) => {
         return;
     }
 
-    console.log(member.user.tag + ` Joined the server ${member.guild.name}`);
-
     let Embed = new Discord.EmbedBuilder()
         .setTitle(`Bienvenue sur le serveur ${member.guild.name}`)
         .setDescription(`Bienvenue sur le serveur ${member.guild.name} !`)
@@ -27,10 +25,8 @@ function fetchChannel(client, member) {
         try {
             client.db.each('SELECT * from Welcome where serverID = ?', [member.guild.id], async (err, rows) => {
                 if (!rows) {
-                    console.log("No channel found");
                     resolve(null);
                 } else {
-                    console.log("rows : " + rows.channelID);
                     const channelID = rows.channelID;
                     const channel = await client.channels.fetch(channelID);
                     resolve(channel);
