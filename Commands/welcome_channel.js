@@ -49,15 +49,6 @@ module.exports = {
                 }
             })
         }
-
-        /*try {
-            await db.run(`DELETE FROM Welcome WHERE serverID = ?`, [message.guild.id])
-
-            db.run(`INSERT INTO Welcome (channelID, serverID) VALUES (?, ?)`, [channel.id, message.guild.id])
-        } catch (err) {
-            return message.reply("Erreur sur la base de donnée, veuillez réessayer plus tard")
-        }*/
-
         await message.reply(`Salon de bienvenue défini sur #${channel.name}`)
     }
 }

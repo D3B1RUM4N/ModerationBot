@@ -54,21 +54,6 @@ module.exports = {
                 }
             })
         }
-
-
-
-
-
-
-
-        /*try {
-            await db.run(`DELETE FROM Role WHERE serverID = ?`, [message.guild.id])
-
-            db.run(`INSERT INTO Role (roleID, serverID) VALUES (?, ?)`, [role.id, message.guild.id])
-        } catch (err) {
-            return message.reply("Erreur sur la base de donnée, veuillez réessayer plus tard")
-        }*/
-
         await message.reply(`Role automatique sur @${role.name}`)
     }
 }

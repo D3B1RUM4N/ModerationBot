@@ -5,12 +5,10 @@ module.exports = async (client, member) => {
     const role = await fetchRole(client, member);
 
     if (role) {
-        console.log(`role found: ${role.name}`)
         member.roles.add(role).catch(err => console.log(err));
     }
 
     if (!channel) {
-        console.log(`not a channel`)
         return;
     }
 
@@ -36,26 +34,8 @@ async function fetchChannel(client, member) {
         const channel = await client.channels.fetch(channelID.channelID);
         return channel;
     } catch (err) {
-        console.log(err);
+        //console.log(err);
     }
-
-
-    /*return new Promise((resolve, reject) => {
-        try {
-            client.db.each('SELECT * from Welcome where serverID = ?', [member.guild.id], async (err, rows) => {
-                if (!rows) {
-                    resolve(null);
-                } else {
-                    const channelID = rows.channelID;
-                    const channel = await client.channels.fetch(channelID);
-                    resolve(channel);
-                }
-            });
-        } catch (err) {
-            console.log(err);
-            reject(err);
-        }
-    });*/
 }
 
 // function to fetch role
@@ -69,22 +49,6 @@ async function fetchRole(client, member) {
         const role = await member.guild.roles.fetch(roleID.roleID);
         return role;
     } catch (err) {
-        console.log(err);
+        //console.log(err);
     }
-    /*return new Promise((resolve, reject) => {
-        try {
-            client.db.each('SELECT * from Welcome where serverID = ?', [member.guild.id], async (err, rows) => {
-                if (!rows) {
-                    resolve(null);
-                } else {
-                    const roleID = rows.roleID;
-                    const role = await member.guild.roles.fetch(roleID);
-                    resolve(role);
-                }
-            });
-        } catch (err) {
-            console.log(err);
-            reject(err);
-        }
-    });*/
 }
