@@ -8,6 +8,9 @@ const config = require('./config')
 const loadEvents = require('./loader/loadEvents')
 const loadCommands = require('./loader/loadCommands')
 
+require('dotenv').config();
+
+
 
 
 //client.party.activate("Happy birthday")
