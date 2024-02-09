@@ -13,17 +13,23 @@ datasource db {
 //npx prisma db push
 
 model Server {
-  id         String     @id
+  serverID   String     @id
   serverName String
   WarnList   WarnList[]
+  Role       Role[]
+  Welcome    Welcome[]
 }
 
 model Welcome {
   channelID String @id
+  server    Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  serverID  String
 }
 
 model Role {
-  roleID String @id
+  roleID   String @id
+  server   Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  serverID String
 }
 
 model WarnList {
@@ -32,6 +38,6 @@ model WarnList {
   authorID String
   reason   String?
   dateWarn DateTime
-  server   Server   @relation(fields: [serverID], references: [id], onDelete: Cascade)
+  server   Server   @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
   serverID String
 }

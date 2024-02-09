@@ -24,13 +24,39 @@ module.exports = {
         let channel = args.getChannel("salon")
         if (!channel) return message.reply("Salon invalide")
 
-        try {
+        const serverChannel = await db.welcome.findUnique({
+            where: {
+                serverID: message.guild.id.toString(),
+                channelID: channel.id.toString()
+            }
+        });
+
+        if (!serverChannel) {
+            await db.welcome.create({
+                data: {
+                    channelID: channel.id.toString(),
+                    serverID: message.guild.id.toString()
+                }
+            });
+        } else {
+            await db.welcome.update({
+                where: {
+                    serverID: message.guild.id.toString(),
+                    channelID: channel.id.toString()
+                },
+                data: {
+                    channelID: channel.id.toString()
+                }
+            })
+        }
+
+        /*try {
             await db.run(`DELETE FROM Welcome WHERE serverID = ?`, [message.guild.id])
 
             db.run(`INSERT INTO Welcome (channelID, serverID) VALUES (?, ?)`, [channel.id, message.guild.id])
         } catch (err) {
             return message.reply("Erreur sur la base de donnée, veuillez réessayer plus tard")
-        }
+        }*/
 
         await message.reply(`Salon de bienvenue défini sur #${channel.name}`)
     }

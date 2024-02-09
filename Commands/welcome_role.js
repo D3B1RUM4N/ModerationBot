@@ -29,17 +29,45 @@ module.exports = {
         }
 
 
+        const serverRole = await db.role.findUnique({
+            where: {
+                serverID: message.guild.id.toString(),
+                roleID: role.id.toString()
+            }
+        });
+
+        if (!serverRole) {
+            await db.role.create({
+                data: {
+                    roleID: role.id,
+                    serverID: message.guild.id.toString()
+                }
+            });
+        } else {
+            await db.role.update({
+                where: {
+                    serverID: message.guild.id.toString(),
+                    roleID: role.id.toString()
+                },
+                data: {
+                    roleID: role.id
+                }
+            })
+        }
 
 
 
 
-        try {
+
+
+
+        /*try {
             await db.run(`DELETE FROM Role WHERE serverID = ?`, [message.guild.id])
 
             db.run(`INSERT INTO Role (roleID, serverID) VALUES (?, ?)`, [role.id, message.guild.id])
         } catch (err) {
             return message.reply("Erreur sur la base de donnée, veuillez réessayer plus tard")
-        }
+        }*/
 
         await message.reply(`Role automatique sur @${role.name}`)
     }
