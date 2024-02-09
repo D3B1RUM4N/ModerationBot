@@ -15,5 +15,8 @@ module.exports = (message) => {
         message.reply('FEUR');
     }else if (synMoche.some(moche => message.content.toLowerCase().includes(moche))) {
         message.reply('c\'est toi t\'es disgracieux');
+    }else{
+        return false;
     }
+    return true;
 };
