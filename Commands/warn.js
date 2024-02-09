@@ -1,6 +1,4 @@
 const Discord = require('discord.js')
-const ms = require('ms')
-const logs = require('../Functions/log.js')
 
 
 module.exports = {
