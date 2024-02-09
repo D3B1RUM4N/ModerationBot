@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/rest": "^1.7.0",
+    "@prisma/client": "^5.9.1",
     "discord": "^0.8.2",
     "discord.js": "^14.9.0",
     "fs": "0.0.1-security",
@@ -28,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/D3B1RUM4N/ModerationBot/issues"
   },
-  "homepage": "https://github.com/D3B1RUM4N/ModerationBot#readme"
+  "homepage": "https://github.com/D3B1RUM4N/ModerationBot#readme",
+  "devDependencies": {
+    "prisma": "^5.9.1"
+  }
 }
