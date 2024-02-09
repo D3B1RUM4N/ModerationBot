@@ -44,9 +44,18 @@ module.exports = {
 
         await message.reply(`vous avez warn ${user.tag} pour la raison suivante : \`${reason}\``)
 
-        let id = await client.function.createID("WARN")
+        //let id = await client.function.createID("WARN")
 
-        db.run(`INSERT INTO warns (serverID, userID, authorID, warnID, reason, date) VALUES (?, ?, ?, ?, ?, ?)`, [message.guild.id, user.id, message.user.id, id, reason.replace(/'/g, "\\'"), Date.now()])
+        //db.run(`INSERT INTO warns (serverID, userID, authorID, warnID, reason, date) VALUES (?, ?, ?, ?, ?, ?)`, [message.guild.id, user.id, message.user.id, id, reason.replace(/'/g, "\\'"), Date.now()])
+        const warn = await db.WarnList.create({
+            data: {
+                serverID: message.guild.id,
+                userID: user.id,
+                authorID: message.user.id,
+                reason: reason.replace(/'/g, "\\'"),
+                dateWarn: new Date(),
+            },
+        });
     }
 
 

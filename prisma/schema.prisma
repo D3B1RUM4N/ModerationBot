@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+//npx prisma db push
+
+model Server {
+  serverID   String     @id
+  serverName String
+  WarnList   WarnList[]
+  Role       Role[]
+  Welcome    Welcome[]
+}
+
+model Welcome {
+  channelID String @id
+  server    Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  serverID  String
+}
+
+model Role {
+  roleID   String @id
+  server   Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  serverID String
+}
+
+model WarnList {
+  warnID   Int      @id @default(autoincrement())
+  userID   String
+  authorID String
+  reason   String?
+  dateWarn DateTime
+  server   Server   @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  serverID String
+}

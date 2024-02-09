@@ -1,14 +1,17 @@
-const { Database } = require('sqlite3').verbose();
+// loadDatabase.js
+const { PrismaClient } = require('@prisma/client');
 
-module.exports = async () => {
-    // Utilisation de la classe Database pour créer une connexion à la base de données SQLite
-    let db = new Database('./database/bdd.db', (err) => {
-        if (err) {
-            console.error('Erreur lors de l\'ouverture de la base de données :', err.message);
-        } else {
-            console.log('Connexion à la base de données réussie.');
-        }
-    });
+const prisma = new PrismaClient();
 
-    return db;
-};
+async function loadDatabase() {
+    try {
+        await prisma.$connect();
+        console.log('Connexion à la base de données établie');
+        return prisma;
+    } catch (e) {
+        console.error('Erreur de connexion à la base de données', e);
+        throw e;
+    }
+}
+
+module.exports = loadDatabase;
