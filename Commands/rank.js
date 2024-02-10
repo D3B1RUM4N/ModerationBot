@@ -7,7 +7,7 @@ module.exports = {
     description: "affiche le rank d'un membre",
     permission: "Aucune",
     dm: false,
-    category: "rank",
+    category: "Rank",
 
     options: [
         {
@@ -49,7 +49,7 @@ module.exports = {
         await allXp.sort( async (a, b) => (await client.function.calculXP(b.xp, b.level)) - (await client.function.calculXP(a.xp, a.level)))
             
         let rank = allXp.findIndex(x => x.userID === user.id) + 1
-        let need = (xp.level + 1) * 100 - xp.xp
+        let need = (xp.level + 1) * 100 
 
 
         let Card = await new Canvas.Card()

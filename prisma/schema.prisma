@@ -18,6 +18,7 @@ model Server {
   WarnList   WarnList[]
   Role       Role[]
   Welcome    Welcome[]
+  enable_xp  Boolean   @default(true)
   Experience Experience[]
 }
 
