@@ -12,6 +12,7 @@
     "@discordjs/rest": "^1.7.0",
     "@prisma/client": "^5.9.1",
     "discord": "^0.8.2",
+    "discord-canvas-easy": "^3.2.1",
     "discord.js": "^14.9.0",
     "dotenv": "^16.4.1",
     "fs": "0.0.1-security",

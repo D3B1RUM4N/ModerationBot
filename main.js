@@ -18,7 +18,9 @@ client.commands = new Discord.Collection()
 //magenta hexa : #FF00FF
 client.color = "#FF00FF";
 client.function = {
-    createID: require('./Functions/createID')
+    createID: require('./Functions/createID'),
+    calculXP: require('./Functions/calculXP')
+
 }
 
 
