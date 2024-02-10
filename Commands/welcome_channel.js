@@ -4,9 +4,9 @@ const logs = require('../Functions/log.js')
 module.exports = {
     name: "welcome_channel",
     description: "ajout d'un salon de bienvenue",
-    permission: Discord.PermissionFlagsBits.ModerateMembers,
+    permission: Discord.PermissionFlagsBits.ManageChannels,
     dm: false,
-    category: "Moderation",
+    category: "Administration",
     options: [
         {
             type: "channel",

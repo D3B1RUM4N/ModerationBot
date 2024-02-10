@@ -4,9 +4,9 @@ const logs = require('../Functions/log.js')
 module.exports = {
     name: "welcome_role",
     description: "ajout d'un role automatique",
-    permission: Discord.PermissionFlagsBits.ModerateMembers,
+    permission: Discord.PermissionFlagsBits.ManageRoles,
     dm: false,
-    category: "Moderation",
+    category: "Administration",
     options: [
         {
             type: "role",
