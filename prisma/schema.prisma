@@ -57,12 +57,21 @@ model Experience {
 }
 
 model Ticket {
-  ticketID    Int     @id @default(autoincrement())
+  ticketID    Int             @id @default(autoincrement())
   serverID    String
   title       String?
   description String?
   roleID      String
   categoryID  String?
+  messageID   Int?
+  messages    TicketMessage[]
+  server      Server          @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+}
 
-  server Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+model TicketMessage {
+  messageID   Int    @id @default(autoincrement())
+  ticketID    Int
+  title       String
+  description String
+  ticket      Ticket @relation(fields: [ticketID], references: [ticketID])
 }
