@@ -73,5 +73,5 @@ model TicketMessage {
   ticketID    Int
   title       String
   description String
-  ticket      Ticket @relation(fields: [ticketID], references: [ticketID])
+  ticket      Ticket @relation(fields: [ticketID], references: [ticketID], onDelete: Cascade)
 }

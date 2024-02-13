@@ -20,6 +20,17 @@ module.exports = async (client, interaction) => {
     }
 
     if (String(interaction.customId).startsWith("ticket-")) {
+        const id = interaction.customId.split("-")[1]
+        const messageTicket = await client.db.TicketMessage.findFirst({
+            where: {
+                ticketID: Number(id)
+            }
+        })
+        const ticket = await client.db.Ticket.findFirst({
+            where: {
+                ticketID: Number(id)
+            }
+        })
 
 
         let channel = await interaction.guild.channels.create({
@@ -35,7 +46,7 @@ module.exports = async (client, interaction) => {
             ReadMessageHistory: true,
             SendMessages: true
         })
-        await channel.permissionOverwrites.create(interaction.user, {
+        await channel.permissionOverwrites.create(interaction.guild.roles.cache.get(ticket.roleID), {
             ViewChannel: true,
             EmbedLinks: true,
             AttachFiles: true,
@@ -52,11 +63,11 @@ module.exports = async (client, interaction) => {
         await channel.setTopic(interaction.user.id)
         let Embed = new Discord.EmbedBuilder()
             .setColor(client.color)
-            .setTitle("Ouverture d'un ticket")
+            .setTitle(messageTicket.title ?? "Bienvenu dans le ticket")
             .setThumbnail(interaction.guild.iconURL({ dynamic: true }))
-            .setDescription("Ticket crée")
+            .setDescription(messageTicket.description ?? "Pose ta question ici")
             .setTimestamp()
-            .setFooter({ text: client.user.username, iconURL: client.user.avatarURL({ dynamic: true }) })
+            .setFooter({ text: interaction.user.username, iconURL: interaction.guild.iconURL({ dynamic: true }) })
 
         const btn = new Discord.ActionRowBuilder().addComponents(new Discord.ButtonBuilder()
             .setCustomId("close_ticket")

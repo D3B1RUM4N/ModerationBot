@@ -29,27 +29,35 @@ module.exports = {
     ],
 
     async run(client, message, args, db) {
-        const Title = args.getString('titre') ?? "Ouverture d'un ticket"
-        const Description = args.getString('description') ?? "Crée un ticket"
-        const Role = args.getRole('role')
-        if (!Role) return message.reply("Role invalide")
+        const title = args.getString('titre') ?? "Ouverture d'un ticket"
+        const description = args.getString('description') ?? "Crée un ticket"
+        const role = args.getRole('role')
+        if (!role) return message.reply("Role invalide")
 
         const ticket = await db.Ticket.create({
             data: {
-                serverID: message.guild.id,
-                title: Title,
-                description: Description,
-                roleID: Role.id,
+                serverID: message.guild.id.toString(),
+                title: title,
+                description: description,
+                roleID: role.id,
             },
+        })
+
+        const ticketMessage = await db.TicketMessage.create({
+            data: {
+                title: "Bienvenu dans le ticket",
+                description: "Pose ta question ici",
+                ticketID: ticket.ticketID
+            }
         })
 
         let Embed = new Discord.EmbedBuilder()
             .setColor(client.color)
-            .setTitle(Title)
+            .setTitle(title)
             .setThumbnail(message.guild.iconURL({ dynamic: true }))
-            .setDescription(Description)
+            .setDescription(description)
             .setTimestamp()
-            .setFooter({ text: `${client.user.username} - ${ticket.ticketID}`, iconURL: client.user.avatarURL({ dynamic: true }) })
+            .setFooter({ text: `${client.user.username} - ${ticket.ticketID}`, iconURL: interaction.guild.iconURL({ dynamic: true }) })
 
         const btn = new Discord.ActionRowBuilder().addComponents(new Discord.ButtonBuilder()
             .setCustomId("ticket-" + ticket.ticketID)
