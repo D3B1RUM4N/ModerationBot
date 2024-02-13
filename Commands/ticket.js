@@ -8,6 +8,12 @@ module.exports = {
     category: "Ticket",
     options: [
         {
+            type: "role",
+            name: "role",
+            description: "Role pour le support",
+            required: true,
+            autocomplete: true
+        }, {
             type: "string",
             name: "titre",
             description: "Titre du ticket",
@@ -19,12 +25,6 @@ module.exports = {
             description: "Description du ticket",
             required: false,
             autocomplete: false
-        }, {
-            type: "role",
-            name: "role",
-            description: "Role pour le support",
-            required: true,
-            autocomplete: true
         },
     ],
 

@@ -19,7 +19,7 @@ module.exports = async (client, interaction) => {
         command.run(client, interaction, interaction.options, client.db);
     }
 
-    if (interaction.customId.startsWith("ticket-")) {
+    if (String(interaction.customId).startsWith("ticket-")) {
 
 
         let channel = await interaction.guild.channels.create({
