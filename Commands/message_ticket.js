@@ -9,7 +9,7 @@ module.exports = {
     options: [
         {
             type: "number",
-            name: "ticketID",
+            name: "ticketid",
             description: "ID du ticket",
             required: true,
             autocomplete: false
