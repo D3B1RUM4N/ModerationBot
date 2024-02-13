@@ -57,7 +57,7 @@ module.exports = {
             .setThumbnail(message.guild.iconURL({ dynamic: true }))
             .setDescription(description)
             .setTimestamp()
-            .setFooter({ text: `${client.user.username} - ${ticket.ticketID}`, iconURL: interaction.guild.iconURL({ dynamic: true }) })
+            .setFooter({ text: `${client.user.username} - ${ticket.ticketID}`, iconURL: message.guild.iconURL({ dynamic: true }) })
 
         const btn = new Discord.ActionRowBuilder().addComponents(new Discord.ButtonBuilder()
             .setCustomId("ticket-" + ticket.ticketID)
