@@ -11,7 +11,7 @@ module.exports = {
             type: "number",
             name: "ticketID",
             description: "ID du ticket",
-            required: false,
+            required: true,
             autocomplete: false
         }, {
             type: "string",
@@ -29,5 +29,23 @@ module.exports = {
     ],
 
     async run(client, message, args, db) {
+        const ticketID = args.getNumber('ticketID')
+        const Title = args.getString('titre') ?? "Bienvenu dans le ticket"
+        const Description = args.getString('description') ?? "Pose ta question ici"
+
+        const ticket = await db.Ticket.findFirst({
+            where: {
+                ticketID: ticketID
+            }
+        })
+        if (!ticket) return message.reply("Ticket invalide")
+
+        const ticketMessage = await db.TicketMessage.create({
+            data: {
+                ticketID: ticketID,
+                title: Title,
+                description: Description,
+            }
+        })
     }
 }

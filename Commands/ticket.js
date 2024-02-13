@@ -23,7 +23,7 @@ module.exports = {
             type: "role",
             name: "role",
             description: "Role pour le support",
-            required: false,
+            required: true,
             autocomplete: true
         },
     ],
@@ -31,7 +31,7 @@ module.exports = {
     async run(client, message, args, db) {
         const Title = args.getString('titre') ?? "Ouverture d'un ticket"
         const Description = args.getString('description') ?? "Crée un ticket"
-        const Role = args.getRole('role') ?? message.guild.roles.everyone
+        const Role = args.getRole('role')
         if (!Role) return message.reply("Role invalide")
 
         const ticket = await db.Ticket.create({
@@ -52,7 +52,7 @@ module.exports = {
             .setFooter({ text: `${client.user.username} - ${ticket.ticketID}`, iconURL: client.user.avatarURL({ dynamic: true }) })
 
         const btn = new Discord.ActionRowBuilder().addComponents(new Discord.ButtonBuilder()
-            .setCustomId("ticket")
+            .setCustomId("ticket-" + ticket.ticketID)
             .setLabel("Crée un ticket")
             .setStyle(Discord.ButtonStyle.Primary)
             .setEmoji("🎫"))
