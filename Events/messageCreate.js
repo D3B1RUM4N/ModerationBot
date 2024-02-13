@@ -4,6 +4,7 @@ const lienRegex = /https?:\/\/\S+/;
 
 
 module.exports = async (client, message) => {
+    //console.log("nouveau message : ", message.id)
     if (message.author.bot) return
     if (message.content.startsWith("/")) return
     if (lienRegex.test(message.content)) return
@@ -12,7 +13,7 @@ module.exports = async (client, message) => {
 
 
 
-    
+
     // a optimiser
     let server = await client.db.server.findFirst({
         where: {
@@ -27,8 +28,7 @@ module.exports = async (client, message) => {
             }
         })
     }
-    if(server.enable_xp)
-    {
+    if (server.enable_xp) {
         let db = client.db
         let xp = await db.experience.findFirst({
             where: {
@@ -36,7 +36,7 @@ module.exports = async (client, message) => {
                 userID: message.author.id
             }
         })
-        if(!xp) {
+        if (!xp) {
             await db.experience.create({
                 data: {
                     serverID: message.guild.id,
@@ -45,9 +45,9 @@ module.exports = async (client, message) => {
                     level: 0
                 }
             })
-        }else{
+        } else {
             let xpToAdd = Math.floor(Math.random() * 25) + 1
-            if((xp.level + 1) * 100 <= xp.xp + xpToAdd) {
+            if ((xp.level + 1) * 100 <= xp.xp + xpToAdd) {
                 await db.experience.update({
                     where: {
                         userID_serverID: {
@@ -61,7 +61,7 @@ module.exports = async (client, message) => {
                     }
                 })
                 message.channel.send(`Bravo ${message.author} tu es passé niveau ${xp.level + 1}`)
-            }else{
+            } else {
                 await db.experience.update({
                     where: {
                         userID_serverID: {
