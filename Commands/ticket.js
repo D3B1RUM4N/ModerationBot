@@ -29,9 +29,9 @@ module.exports = {
     ],
 
     async run(client, message, args, db) {
-        const Title = args.getString('Titre') || "Ouverture d'un ticket"
-        const Description = args.getString('Description') || "Crée un ticket"
-        const Role = args.getRole('Role') || message.guild.roles.everyone
+        const Title = args.getString('titre') ?? "Ouverture d'un ticket"
+        const Description = args.getString('description') ?? "Crée un ticket"
+        const Role = args.getRole('role') ?? message.guild.roles.everyone
         if (!Role) return message.reply("Role invalide")
 
         const ticket = await db.Ticket.create({
