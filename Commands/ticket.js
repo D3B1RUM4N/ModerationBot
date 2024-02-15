@@ -66,6 +66,8 @@ module.exports = {
             .setEmoji("🎫"))
 
         let messageTicket = await message.reply({ embeds: [Embed], components: [btn] })
+        //let messageTicket = await message.channel.send({ embeds: [Embed], components: [btn] })
+
         await db.ticket.update({
             where: {
                 ticketID: ticket.ticketID
