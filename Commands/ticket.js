@@ -64,9 +64,10 @@ module.exports = {
             .setLabel("Crée un ticket")
             .setStyle(Discord.ButtonStyle.Primary)
             .setEmoji("🎫"))
-
-        let messageTicket = await message.reply({ embeds: [Embed], components: [btn] })
-        //let messageTicket = await message.channel.send({ embeds: [Embed], components: [btn] })
+        
+        
+        await message.reply({ content: `Ticket cree avec succes, role support : ${role.name}`, ephemeral: true })
+        let messageTicket = await message.channel.send({ embeds: [Embed], components: [btn] })
 
         await db.ticket.update({
             where: {
