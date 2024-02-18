@@ -6,7 +6,7 @@ module.exports = {
     description: "ajout d'un salon de bienvenue",
     permission: Discord.PermissionFlagsBits.ManageChannels,
     dm: false,
-    category: "Administration",
+    category: "Gestion de serveur",
     options: [
         {
             type: "channel",

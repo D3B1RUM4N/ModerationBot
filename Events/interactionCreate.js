@@ -6,11 +6,45 @@ module.exports = async (client, interaction) => {
 
         let entry = interaction.options.getFocused()
 
-        if (interaction.commandName === "help") {
+        const focusedOption = interaction.options._hoistedOptions.find(option => option.focused);
+        const focusedOptionName = focusedOption ? focusedOption.name : null;
+        //console.log(focusedOptionName);
 
+        if (interaction.commandName === "help") {
+            
             let choices = client.commands.filter(cmd => cmd.name.includes(entry))
             await interaction.respond(entry === "" ? client.commands.map(cmd => ({ name: cmd.name, value: cmd.name })) : choices.map(choice => ({ name: choice.name, value: choice.name })))
         }
+
+        // if (interaction.commandName === "ticket_message") {
+        //     console.log("ticket")
+        //     let choices = ["ticketID", "titre", "description"]
+        //     // let choices = await client.db.Ticket.findMany({
+        //     //     where: {
+        //     //         serverID: interaction.guild.id.toString()
+        //     //     }
+        //     // })
+        //     console.log("choices : ",choices)
+        //     let sortie = choices.filter(c => c.ticketID.toString().includes(entry))
+        //     await interaction.respond(entry === "" ? choices.map(c => ({ name: c.ticketID.toString(), value: c.ticketID.toString() })) : sortie.map(c => ({ name: c.ticketID.toString(), value: c.ticketID.toString() })))
+        // }
+
+        if (interaction.commandName === "reaction_roles" && interaction.options.getSubcommand() === "action") {
+            let choices = ["add", "remove"]
+            let sortie = choices.filter(c => c.includes(entry))
+            await interaction.respond(entry === "" ? choices.map(c => ({ name: c, value: c })) : sortie.map(c => ({ name: c, value: c })))
+        }
+
+        if (interaction.commandName === "reaction_roles" && interaction.options.getSubcommand() === "reactionID") {
+            let choices = await client.db.reactionroles.findMany({
+                where: {
+                    serverID: interaction.guild.id
+                }
+            })
+            let sortie = choices.filter(c => c.id.toString().includes(entry))
+            await interaction.respond(entry === "" ? choices.map(c => ({ name: c.id.toString(), value: c.id.toString() })) : sortie.map(c => ({ name: c.id.toString(), value: c.id.toString() })))
+        }
+
     }
 
     if (interaction.type === Discord.InteractionType.ApplicationCommand) {

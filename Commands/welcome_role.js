@@ -6,7 +6,7 @@ module.exports = {
     description: "ajout d'un role automatique",
     permission: Discord.PermissionFlagsBits.ManageRoles,
     dm: false,
-    category: "Administration",
+    category: "Gestion de serveur",
     options: [
         {
             type: "role",

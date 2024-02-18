@@ -12,7 +12,7 @@ module.exports = {
             name: "ticket",
             description: "ID du ticket (indice : en bas du message du ticket)",
             required: true,
-            autocomplete: false
+            autocomplete: true
         }, {
             type: "string",
             name: "titre",
