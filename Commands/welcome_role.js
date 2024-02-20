@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const logs = require('../Functions/log.js')
+const roleExist = require('../Functions/roleExist.js')
 
 module.exports = {
     name: "welcome_role",
@@ -28,26 +29,26 @@ module.exports = {
             if (role && role.comparePositionTo(member.roles.highest) >= 0) return message.reply("Je ne peux pas donner ce role")
         }
 
+        await roleExist.roleExist(role.id, db)
 
-        const serverRole = await db.role.findUnique({
+        const welcomeRole = await db.welcomerole.findUnique({
             where: {
                 serverID: message.guild.id.toString(),
                 roleID: role.id.toString()
             }
         });
 
-        if (!serverRole) {
-            await db.role.create({
+        if (!welcomeRole) {
+            await db.welcomerole.create({
                 data: {
                     roleID: role.id,
                     serverID: message.guild.id.toString()
                 }
             });
         } else {
-            await db.role.update({
+            await db.welcomerole.update({
                 where: {
                     serverID: message.guild.id.toString(),
-                    roleID: role.id.toString()
                 },
                 data: {
                     roleID: role.id

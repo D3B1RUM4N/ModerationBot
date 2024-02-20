@@ -33,9 +33,10 @@ model Welcome {
 }
 
 model WelcomeRole {
-  roleID   String @id
+  serverID String @id
+  roleID   String @unique
+  role     Roles  @relation(fields: [roleID], references: [roleID])
   server   Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
-  serverID String @unique
 }
 
 model WarnList {
@@ -92,4 +93,5 @@ model Roles {
   reactionRoles ReactionRoles[]
   Ticket        Ticket[]
   server        Server          @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  WelcomeRole   WelcomeRole[]
 }

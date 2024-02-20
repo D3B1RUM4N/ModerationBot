@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const roleExist = require('../Functions/roleExist.js')
 
 module.exports = {
     name: "ticket",
@@ -34,6 +35,8 @@ module.exports = {
         const role = args.getRole('role')
         if (!role) return message.reply("Role invalide")
 
+        await roleExist.roleExist(role.id, db)
+
         const ticket = await db.Ticket.create({
             data: {
                 serverID: message.guild.id.toString(),
@@ -61,11 +64,11 @@ module.exports = {
 
         const btn = new Discord.ActionRowBuilder().addComponents(new Discord.ButtonBuilder()
             .setCustomId("ticket-" + ticket.ticketID)
-            .setLabel("Crée un ticket")
+            .setLabel("Créer un ticket")
             .setStyle(Discord.ButtonStyle.Primary)
             .setEmoji("🎫"))
-        
-        
+
+
         await message.reply({ content: `Ticket cree avec succes, role support : ${role.name}`, ephemeral: true })
         let messageTicket = await message.channel.send({ embeds: [Embed], components: [btn] })
 

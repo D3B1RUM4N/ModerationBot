@@ -49,6 +49,6 @@ module.exports = {
                 }
             })
         }
-        await message.reply(`Salon de bienvenue défini sur #${channel.name}`)
+        await message.reply({ content: `Salon de bienvenue défini sur #${channel.name}`, ephemeral: true })
     }
 }
