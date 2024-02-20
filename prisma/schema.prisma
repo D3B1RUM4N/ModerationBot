@@ -14,28 +14,28 @@ datasource db {
 // npx prisma migrate dev --name 
 
 model Server {
-  serverID   String       @id
-  serverName String
-  WarnList   WarnList[]
-  Role       Role[]
-  Welcome    Welcome[]
-  enable_xp  Boolean      @default(true)
-  Experience Experience[]
-  Ticket     Ticket[]
+  serverID      String          @id
+  serverName    String
+  WarnList      WarnList[]
+  WelcomeRole   WelcomeRole?
+  Welcome       Welcome?
+  enable_xp     Boolean         @default(true)
+  Experience    Experience[]
+  Ticket        Ticket[]
   ReactionRoles ReactionRoles[]
-  Roles      Roles[]
+  Roles         Roles[]
 }
 
 model Welcome {
   channelID String @id
   server    Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
-  serverID  String
+  serverID  String @unique
 }
 
-model Role {
+model WelcomeRole {
   roleID   String @id
   server   Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
-  serverID String
+  serverID String @unique
 }
 
 model WarnList {
@@ -59,38 +59,37 @@ model Experience {
 }
 
 model Ticket {
-  ticketID        Int             @id @default(autoincrement())
+  ticketID        Int            @id @default(autoincrement())
   serverID        String
   title           String
   description     String
-  roleID          String
+  Roles           Roles[]
   messageID       String?
   TicketMessageID Int?
-  messages        TicketMessage[]
-  server          Server          @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  messages        TicketMessage?
+  server          Server         @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
 }
 
 model TicketMessage {
   messageID   Int    @id @default(autoincrement())
-  ticketID    Int
+  ticketID    Int    @unique
   title       String
   description String
   ticket      Ticket @relation(fields: [ticketID], references: [ticketID], onDelete: Cascade)
 }
 
 model ReactionRoles {
-  reactionRoleID Int   @id @default(autoincrement())
-  roles    Roles[] 
-  serverID  String
-  messageID String?
-  server    Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  reactionRoleID Int     @id @default(autoincrement())
+  roles          Roles[]
+  serverID       String
+  messageID      String?
+  server         Server  @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
 }
 
 model Roles {
-  roleID   String @id
-  serverID String
+  roleID        String          @id
+  serverID      String
   reactionRoles ReactionRoles[]
-  server   Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
-  
-
+  Ticket        Ticket[]
+  server        Server          @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
 }
