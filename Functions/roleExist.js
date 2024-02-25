@@ -1,5 +1,5 @@
 module.exports = {
-    roleExist: async function (roleID, db) {
+    roleExist: async function (roleID, db, serverID) {
         const role = await db.roles.findUnique({
             where: {
                 roleID: roleID.toString()
@@ -8,7 +8,8 @@ module.exports = {
         if (!role) {
             await db.roles.create({
                 data: {
-                    roleID: roleID
+                    roleID: roleID,
+                    serverID: serverID
                 }
             });
         }

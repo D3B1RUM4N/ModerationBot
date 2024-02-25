@@ -35,15 +35,20 @@ module.exports = {
         const role = args.getRole('role')
         if (!role) return message.reply("Role invalide")
 
-        await roleExist.roleExist(role.id, db)
+        await roleExist.roleExist(role.id, db, message.guild.id.toString())
 
         const ticket = await db.Ticket.create({
             data: {
                 serverID: message.guild.id.toString(),
                 title: title,
                 description: description,
-                roleID: role.id,
-            },
+                //roleID: role.id
+                roles: {
+                    connect:[ 
+                        {roleID: role.id}
+                    ]
+                },
+            }
         })
 
         const ticketMessage = await db.TicketMessage.create({
