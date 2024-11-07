@@ -25,6 +25,12 @@ module.exports = {
             autocomplete: false
         }, {
             type: "string",
+            name: "projet",
+            description: "Projet sur lequel vous avez travaillé",
+            required: false,
+            autocomplete: false
+        }, {
+            type: "string",
             name: "date",
             description: "Date de la tache (ex: 2021-08-01)",
             required: false,
@@ -45,6 +51,7 @@ module.exports = {
         let time = args.getString("temps")
         let date = args.getString("date") || new Date().toISOString().split('T')[0]
         let description = args.getString("description") || "Aucune description"
+        let projet = args.getString("projet") || "Aucun projet"
 
         if (isNaN(ms(time))) return message.reply("Temps invalide")
         if (ms(time) > 2419200000) return message.reply("Le temps ne peut duré plus de 28 jours")
@@ -57,7 +64,8 @@ module.exports = {
                     task: task,
                     workTime: ms(time),
                     dateWorkTime: date,
-                    comment: description
+                    comment: description,
+                    projet: projet
                 }
             })
             // i want a better looking recap

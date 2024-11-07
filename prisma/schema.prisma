@@ -87,5 +87,6 @@ model WorkTime {
   workTime     Int
   comment      String?
   dateWorkTime String
+  projet       String?
   server       Server  @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
 }
