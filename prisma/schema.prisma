@@ -6,7 +6,6 @@ generator client {
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
-
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -24,6 +23,8 @@ model Server {
   enable_xp  Boolean      @default(true)
   Experience Experience[]
   Ticket     Ticket[]
+
+  WorkTime WorkTime[]
 }
 
 model Welcome {
@@ -76,4 +77,15 @@ model TicketMessage {
   title       String
   description String
   ticket      Ticket @relation(fields: [ticketID], references: [ticketID], onDelete: Cascade)
+}
+
+model WorkTime {
+  workTimeID   Int     @id @default(autoincrement())
+  userID       String
+  serverID     String
+  task         String
+  workTime     Int
+  comment      String?
+  dateWorkTime String
+  server       Server  @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
 }
