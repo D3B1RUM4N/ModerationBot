@@ -58,7 +58,7 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: "Commandes du Robot" });
             workTime.forEach(wt => {
-                Embed.addFields({ name: `Tache : ${wt.task}`, value: `Temps : ${ms(wt.workTime, { long: true })}\nDescription : ${wt.comment}\nDate : ${wt.dateWorkTime}` })
+                Embed.addFields({ name: `Tache : ${wt.task}`, value: `Temps : ${ms(wt.workTime, { long: true })}` })
             })
 
             let total = 0;
