@@ -30,7 +30,7 @@ module.exports = {
     ],
 
     async run(client, message, args, db) {
-        let projet = args.getString("projet")
+        let projet = args.getString("projet") || "Aucun projet"
         let all = args.getBoolean("all")
         let workTime
         try {
@@ -58,7 +58,7 @@ module.exports = {
                 .setTimestamp()
                 .setFooter({ text: "Commandes du Robot" });
             workTime.forEach(wt => {
-                Embed.addFields({ name: `Tache : ${wt.task}`, value: `Temps : ${ms(wt.workTime, { long: true })}` })
+                Embed.addFields({ name: `Tache : ${wt.task}`, value: `Temps : ${ms(wt.workTime, { long: true })} ||id : ${wt.workTimeID}||` })
             })
 
             let total = 0;
