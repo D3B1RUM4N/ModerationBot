@@ -70,9 +70,10 @@ module.exports = {
             })
             // i want a better looking recap
             let Embed = new Discord.EmbedBuilder()
-                .setTitle(`Temps de travail ajouté pour la tâche ${workTime.task}`)
+                .setTitle(`Temps de travail ajouté pour la tâche **${workTime.task}**`)
                 .addFields(
                     { name: "Temps de travail", value: ms(workTime.workTime), inline: true },
+                    { name: "Projet", value: workTime.projet, inline: true },
                     { name: "Date", value: workTime.dateWorkTime, inline: true },
                     { name: "Description", value: workTime.comment }
                 );
