@@ -30,6 +30,8 @@ module.exports = {
     ],
 
     async run(client, message, args, db) {
+        logs.log(`[${new Date().toISOString()}]\t ${message.user.tag} a envoyé "${message}" dans le canal ${message.channel.name}`);
+
         let projet = args.getString("projet") || "Aucun projet"
         let all = args.getBoolean("all")
         let workTime
