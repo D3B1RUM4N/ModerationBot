@@ -56,7 +56,7 @@ module.exports = {
             let Embed = new Discord.EmbedBuilder()
                 .setColor(client.color)
                 .setTitle(`Recapitulatif des taches sur le projet ${projet}`)
-                .setThumbnail(client.user.displayAvatarURL({ dynamic: true }))
+                .setThumbnail(message.user.displayAvatarURL())
                 .setTimestamp()
                 .setFooter({ text: "Commandes du Robot" });
             workTime.forEach(wt => {
