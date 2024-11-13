@@ -16,8 +16,8 @@ module.exports = {
             type: "string",
             name: "projet",
             description: "Projet dont vous voulez reucperer le recapitulatif",
-            required: false,
-            autocomplete: false
+            required: true,
+            autocomplete: true
         },
         {
             type: "boolean",
@@ -36,7 +36,7 @@ module.exports = {
         let all = args.getBoolean("all")
         let workTime
         try {
-            if (!projet) {
+            if (projet !== "Tout") {
                 if (all) {
                     //check serverID
                     workTime = await db.WorkTime.findMany({ where: { projet: projet, serverID: message.guild.id } })

@@ -11,6 +11,18 @@ module.exports = async (client, interaction) => {
             let choices = client.commands.filter(cmd => cmd.name.includes(entry))
             await interaction.respond(entry === "" ? client.commands.map(cmd => ({ name: cmd.name, value: cmd.name })) : choices.map(choice => ({ name: choice.name, value: choice.name })))
         }
+
+        if (interaction.commandName === "addworktime") {
+
+            let choices = ["Odin", "Vili", "Vé", "Gestion de projet", "Autre"]
+            await interaction.respond(entry === "" ? choices.map(choice => ({ name: choice, value: choice })) : choices.filter(choice => choice.includes(entry)).map(choice => ({ name: choice, value: choice })))
+        }
+
+        if (interaction.commandName === "recapworktime") {
+
+            let choices = ["Tout", "Odin", "Vili", "Vé", "Gestion de projet", "Autre"]
+            await interaction.respond(entry === "" ? choices.map(choice => ({ name: choice, value: choice })) : choices.filter(choice => choice.includes(entry)).map(choice => ({ name: choice, value: choice })))
+        }
     }
 
     if (interaction.type === Discord.InteractionType.ApplicationCommand) {

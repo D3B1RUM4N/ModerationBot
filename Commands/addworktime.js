@@ -27,8 +27,8 @@ module.exports = {
             type: "string",
             name: "projet",
             description: "Projet sur lequel vous avez travaillé",
-            required: false,
-            autocomplete: false
+            required: true,
+            autocomplete: true
         }, {
             type: "string",
             name: "date",
