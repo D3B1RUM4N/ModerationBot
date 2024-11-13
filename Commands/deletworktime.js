@@ -13,7 +13,7 @@ module.exports = {
 
     options: [
         {
-            type: "string",
+            type: "number",
             name: "id",
             description: "ID du temps de travail",
             required: true,
@@ -24,10 +24,12 @@ module.exports = {
     async run(client, message, args, db) {
         logs.log(`[${new Date().toISOString()}]\t ${message.user.tag} a envoyé "${message}" dans le canal ${message.channel.name}`);
 
-        let id = args.getString("id")
+        let id = args.getNumber("id")
 
         try {
-            db.workTime.delete({ where: { id: id } })
+            const workTime = await db.WorkTime.findFirst({ where: { workTimeID: id } })
+            if (!workTime) return message.reply("Tache introuvable")
+            await db.WorkTime.delete({ where: { workTimeID: id } })
             message.reply("Tache supprimée")
         } catch (error) {
             message.reply("Erreur lors de la suppression")
