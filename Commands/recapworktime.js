@@ -33,7 +33,7 @@ module.exports = {
         logs.log(`[${new Date().toISOString()}]\t ${message.user.tag} a envoyé "${message}" dans le canal ${message.channel.name}`);
 
         let projet = args.getString("projet") || "Aucun projet"
-        let all = args.getBoolean("all")
+        let all = args.getBoolean("all") || false
         let workTime
         try {
             if (projet !== "Tout") {
