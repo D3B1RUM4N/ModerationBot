@@ -80,13 +80,14 @@ model TicketMessage {
 }
 
 model WorkTime {
-  workTimeID   Int     @id @default(autoincrement())
-  userID       String
-  serverID     String
-  task         String
-  workTime     Int
-  comment      String?
-  dateWorkTime String
-  projet       String?
-  server       Server  @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  workTimeID    Int     @id @default(autoincrement())
+  userID        String
+  serverID      String
+  task          String
+  workTime      Int
+  comment       String?
+  dateWorkTime  String
+  projet        String?
+  estimatedTime Int?
+  server        Server  @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
 }

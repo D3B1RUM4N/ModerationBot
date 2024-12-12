@@ -31,6 +31,12 @@ module.exports = {
             autocomplete: true
         }, {
             type: "string",
+            name: "temps_estimé",
+            description: "estimation du temps sur la tache (ex: 1d, 1h, 1m, 1s)",
+            required: false,
+            autocomplete: false
+        }, {
+            type: "string",
             name: "date",
             description: "Date de la tache (ex: 2021-08-01)",
             required: false,
@@ -49,12 +55,22 @@ module.exports = {
 
         let task = args.getString("tache")
         let time = args.getString("temps")
+        let estimatedTime = args.getString("temps estimé")
         let date = args.getString("date") || new Date().toISOString().split('T')[0]
         let description = args.getString("description") || "Aucune description"
         let projet = args.getString("projet") || "Aucun projet"
 
         if (isNaN(ms(time))) return message.reply("Temps invalide")
         if (ms(time) > 2419200000) return message.reply("Le temps ne peut duré plus de 28 jours")
+        //generate a random estimated time if not provided
+        if (!estimatedTime) {
+            let min = ms(time) * 0.7
+            let max = ms(time) * 1.3
+            estimatedTime = Math.floor(Math.random() * (max - min + 1) + min)
+        } else {
+            if (isNaN(ms(estimatedTime))) return message.reply("Temps estimé invalide")
+            if (ms(estimatedTime) > 2419200000) return message.reply("Le temps estimé ne peut duré plus de 28 jours")
+        }
 
         try {
             const workTime = await db.WorkTime.create({
@@ -64,6 +80,7 @@ module.exports = {
                     task: task,
                     workTime: ms(time),
                     dateWorkTime: date,
+                    estimatedTime: estimatedTime,
                     comment: description,
                     projet: projet
                 }
@@ -77,7 +94,8 @@ module.exports = {
                     { name: "Temps de travail", value: ms(workTime.workTime), inline: true },
                     { name: "Projet", value: workTime.projet, inline: true },
                     { name: "Date", value: workTime.dateWorkTime, inline: true },
-                    { name: "Description", value: workTime.comment }
+                    { name: "Description", value: workTime.comment },
+                    { name: "Temps estimé", value: ms(workTime.estimatedTime) }
                 );
 
             await message.reply({ embeds: [Embed] });
