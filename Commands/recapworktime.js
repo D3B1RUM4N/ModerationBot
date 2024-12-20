@@ -3,7 +3,6 @@ const logs = require('../Functions/log')
 const ms = require('ms');
 const { name } = require('./ban');
 
-
 module.exports = {
     name: "recapworktime",
     description: "voir le recapitulaif de son temps de travail",
@@ -26,7 +25,6 @@ module.exports = {
             required: false,
             autocomplete: false
         }
-
     ],
 
     async run(client, message, args, db) {
@@ -38,7 +36,6 @@ module.exports = {
         try {
             if (projet !== "Tout") {
                 if (all) {
-                    //check serverID
                     workTime = await db.WorkTime.findMany({ where: { projet: projet, serverID: message.guild.id } })
                 } else {
                     workTime = await db.WorkTime.findMany({ where: { projet: projet, userID: message.user.id, serverID: message.guild.id } })
@@ -51,37 +48,38 @@ module.exports = {
                 }
             }
 
-            if (!workTime) return message.reply("Aucune tache sur se projet")
+            if (!workTime?.length) return message.reply("Aucune tache sur ce projet");
 
-            // message contenant toutes les tahces
-            /*let Embed = new Discord.EmbedBuilder()
+            // Get the last 25 elements
+            const lastEntries = workTime.slice(-25);
+
+            let Embed = new Discord.EmbedBuilder()
                 .setColor(client.color)
                 .setTitle(`Recapitulatif des taches sur le projet ${projet}`)
                 .setThumbnail(message.user.displayAvatarURL())
                 .setTimestamp()
                 .setFooter({ text: "Commandes du Robot" });
-            workTime.forEach(wt => {
-                Embed.addFields({ name: `Tache : ${wt.task}`, value: `Temps : ${ms(wt.workTime, { long: true })} ||id : ${wt.workTimeID}||` })
-            })*/
 
-            let total = 0;
-            workTime.forEach(wt => {
-                total += wt.workTime;
-            })
+            lastEntries.forEach(wt => {
+                Embed.addFields({
+                    name: `Tache : ${wt.task}`,
+                    value: `Temps : ${ms(wt.workTime, { long: true })} ||id : ${wt.workTimeID}||`
+                });
+            });
+
+            let total = workTime.reduce((acc, wt) => acc + wt.workTime, 0);
 
             const formatDuration = (milliseconds) => {
                 const seconds = Math.floor((milliseconds / 1000) % 60);
                 const minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
                 const hours = Math.floor(milliseconds / (1000 * 60 * 60));
-
                 return `${hours}h ${minutes}m ${seconds}s`;
             };
 
             return message.reply({
                 content: `\nTemps de travail sur le projet ${projet} : ${formatDuration(total)}`,
-                //embeds: [Embed]
+                embeds: [Embed]
             });
-
 
         } catch (err) {
             console.error(err)
