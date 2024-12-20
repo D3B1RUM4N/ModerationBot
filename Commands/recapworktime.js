@@ -52,8 +52,9 @@ module.exports = {
             }
 
             if (!workTime) return message.reply("Aucune tache sur se projet")
+
             // message contenant toutes les tahces
-            let Embed = new Discord.EmbedBuilder()
+            /*let Embed = new Discord.EmbedBuilder()
                 .setColor(client.color)
                 .setTitle(`Recapitulatif des taches sur le projet ${projet}`)
                 .setThumbnail(message.user.displayAvatarURL())
@@ -61,15 +62,24 @@ module.exports = {
                 .setFooter({ text: "Commandes du Robot" });
             workTime.forEach(wt => {
                 Embed.addFields({ name: `Tache : ${wt.task}`, value: `Temps : ${ms(wt.workTime, { long: true })} ||id : ${wt.workTimeID}||` })
-            })
+            })*/
 
             let total = 0;
             workTime.forEach(wt => {
                 total += wt.workTime;
             })
+
+            const formatDuration = (milliseconds) => {
+                const seconds = Math.floor((milliseconds / 1000) % 60);
+                const minutes = Math.floor((milliseconds / (1000 * 60)) % 60);
+                const hours = Math.floor(milliseconds / (1000 * 60 * 60));
+
+                return `${hours}h ${minutes}m ${seconds}s`;
+            };
+
             return message.reply({
-                content: `\nTemps de travail sur le projet ${projet} : ${ms(total, { long: true })}`,
-                embeds: [Embed]
+                content: `\nTemps de travail sur le projet ${projet} : ${formatDuration(total)}`,
+                //embeds: [Embed]
             });
 
 
