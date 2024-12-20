@@ -14,13 +14,13 @@ module.exports = async (client, interaction) => {
 
         if (interaction.commandName === "addworktime") {
 
-            let choices = ["Odin", "Vili", "Vé", "loki", "Gestion de projet", "Autre"]
+            let choices = ["Odin", "Vili", "Vé", "Loki", "Gestion de projet", "Autre"]
             await interaction.respond(entry === "" ? choices.map(choice => ({ name: choice, value: choice })) : choices.filter(choice => choice.includes(entry)).map(choice => ({ name: choice, value: choice })))
         }
 
         if (interaction.commandName === "recapworktime") {
 
-            let choices = ["Tout", "Odin", "Vili", "Vé", "loki", "Gestion de projet", "Autre"]
+            let choices = ["Tout", "Odin", "Vili", "Vé", "Loki", "Gestion de projet", "Autre"]
             await interaction.respond(entry === "" ? choices.map(choice => ({ name: choice, value: choice })) : choices.filter(choice => choice.includes(entry)).map(choice => ({ name: choice, value: choice })))
         }
     }
