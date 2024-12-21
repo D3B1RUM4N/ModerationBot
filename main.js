@@ -7,6 +7,7 @@ const config = require('./config')
 //const loadCommands = require('./loader/loadCommands')
 const loadEvents = require('./loader/loadEvents')
 const loadCommands = require('./loader/loadCommands')
+const motivation = require('./Functions/motivation')
 
 require('dotenv').config();
 
@@ -20,8 +21,10 @@ client.color = "#FF00FF";
 client.function = {
     createID: require('./Functions/createID'),
     calculXP: require('./Functions/calculXP')
-
 }
+
+motivation(client)
+
 
 
 
