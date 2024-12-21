@@ -34,4 +34,6 @@ const phrase = [
     "# Ein Volk, ein Reich, ein Führer\n \t-Hitler",
     "# Mourir est facile, c\’est vivre en esclave qui est difficile\n",
     "# Il Duce ha sempre ragione\n \t-Mussolini",
+    "# Saisissez vos heures de travails\n \t -D3B1RUM4N",
+    "# 1h de travail c'est un petit pas pour vous, mais un grand pas pour la Níðhöggr TaskForce\n \t -D3B1RUM4N",
 ]
