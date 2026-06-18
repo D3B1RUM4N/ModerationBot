@@ -13,7 +13,7 @@ module.exports = async (client, member) => {
     }
 
     let Embed = new Discord.EmbedBuilder()
-        .setTitle(`Bienvenue sur le serveur ${member.guild.name}`)
+        .setTitle(`Bienvenue sur le serveur ${member.user.username} !`)
         .setDescription(`Bienvenue sur le serveur ${member.guild.name} !`)
         .setColor(client.color)
         .setTimestamp()
