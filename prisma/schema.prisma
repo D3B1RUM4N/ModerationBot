@@ -24,7 +24,8 @@ model Server {
   Experience Experience[]
   Ticket     Ticket[]
 
-  WorkTime WorkTime[]
+  WorkTime    WorkTime[]
+  banChannels BanChannel[]
 }
 
 model Welcome {
@@ -90,4 +91,10 @@ model WorkTime {
   projet        String?
   estimatedTime Int?
   server        Server  @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+}
+
+model BanChannel {
+  channelID String @id
+  server    Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+  serverID  String
 }
