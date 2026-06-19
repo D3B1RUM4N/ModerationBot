@@ -20,6 +20,12 @@ module.exports = async (client, message) => {
             if (!member?.bannable) return message.reply("T'as de la chance que je peux pas te ban")
             if ((await message.guild.bans.fetch()).get(user.id)) return message.reply("Ce membre est déjà ban")
 
+            //envoyer un mp
+            try {
+                await message.author.send(`Vous avez été banni du serveur ${message.guild.name} pour avoir écrit dans le channel de bannissement automatique.`)
+            } catch (err) {
+                console.error(`Impossible d'envoyer un message privé à ${message.author.tag}.`, err)
+            }
             try { await user.send(`Tu as été banni du serveur ${message.guild.name} par ${message.user.tag} pour la raison suivante :\n \`\`\`${reason}\`\`\` `) } catch (err) { }
 
             //await message.reply(`${message.user} a bannis ${user.tag} pour la raison suivante :\n \`\`\`${reason}\`\`\` `)
@@ -30,12 +36,6 @@ module.exports = async (client, message) => {
             //return message.reply("Membre invalide")
         }
 
-        //envoyer un mp
-        try {
-            await message.author.send(`Vous avez été banni du serveur ${message.guild.name} pour avoir écrit dans le channel de bannissement automatique.`)
-        } catch (err) {
-            console.error(`Impossible d'envoyer un message privé à ${message.author.tag}.`, err)
-        }
 
         const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
         const channels = await message.guild.channels.fetch()
