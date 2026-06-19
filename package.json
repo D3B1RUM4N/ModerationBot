@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/rest": "^1.7.0",
-    "@prisma/client": "^7.8.0",
+    "@prisma/client": "^6.16.0",
     "discord-canvas-easy": "^3.2.1",
     "discord.js": "^14.9.0",
     "dotenv": "^16.4.1",
@@ -20,6 +20,6 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
-    "prisma": "^7.8.0"
+    "prisma": "^6.16.0"
   }
 }
