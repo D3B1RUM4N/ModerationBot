@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const logs = require('../Functions/log')
+const logs = require('../../Functions/log')
 
 module.exports = {
     name: "ban",
