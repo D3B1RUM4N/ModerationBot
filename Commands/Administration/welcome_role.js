@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const logs = require('../Functions/log.js')
+const logs = require('../../Functions/log.js')
 
 module.exports = {
     name: "welcome_role",
