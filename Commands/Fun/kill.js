@@ -22,7 +22,8 @@ module.exports = {
 
         const user = message.options.getUser('membre');
 
-        if (!user) return client.errUsage({ usage: "kill [utilisateur]", type: 'editreply' }, message);
+        if (!user) return message.reply("kill [utilisateur]");
+
         var kills = [
             ` après une sale journée, se pose sur le canap avec ${user} et mate The Big Bang Theory. Après une vanne de Sheldon Cooper, ${user} lâche son meilleur fou rire et claque sur place.`,
             `${message.user} a fait Alt+F4 sur ${user}.exe !`,
@@ -222,7 +223,7 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: `${message.user.username}`, iconURL: message.user.displayAvatarURL({ dynamic: true }) })
 
-        await message.channel.send({ embeds: [embed] });
+        await message.reply({ embeds: [embed] });
 
 
     }
