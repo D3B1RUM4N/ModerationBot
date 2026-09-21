@@ -5,6 +5,8 @@ const loadDatabase = require('../loader/loadDatabase')
 
 const logs = require('../Functions/log')
 
+const { initScheduler } = require('../Functions/eventScheduler.js');
+
 
 module.exports = async client => {
 
@@ -20,6 +22,8 @@ module.exports = async client => {
             url: 'https://discord.gg/acPCHR5Yqu'
         }],
     });
+
+    initScheduler(client, client.db);
 
     console.log(`${client.user.tag} est bien en ligne !`)
     logs.log(`${client.user.tag} est bien en ligne !`)

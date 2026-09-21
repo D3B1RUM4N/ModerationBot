@@ -24,8 +24,9 @@ model Server {
   Experience Experience[]
   Ticket     Ticket[]
 
-  WorkTime    WorkTime[]
-  banChannels BanChannel[]
+  WorkTime        WorkTime[]
+  banChannels     BanChannel[]
+  scheduledEvents ScheduledEvent[]
 }
 
 model Welcome {
@@ -97,4 +98,24 @@ model BanChannel {
   channelID String @id
   server    Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
   serverID  String
+}
+
+model ScheduledEvent {
+  eventID       Int      @id @default(autoincrement())
+  serverID      String
+  channelID     String
+  title         String
+  description   String   @db.Text
+  color         String?  @default("#FF8C00")
+  imageUrl      String?
+  roleID        String?
+  cronTime      String // Format HH:mm (ex: "12:00")
+  dayOfWeek     Int // 0 = Dimanche, 1 = Lundi, ..., 5 = Vendredi, 6 = Samedi
+  intervalWeeks Int      @default(1) // 1 = toutes les semaines, 2 = 1 semaine sur 2
+  anchorDate    DateTime // Date de référence pour l'alternance
+  paused        Boolean  @default(false)
+  skipNext      Boolean  @default(false)
+
+  // RELATION AVEC SERVER
+  server Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
 }
