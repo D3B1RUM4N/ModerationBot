@@ -47,7 +47,7 @@ module.exports = {
             required: false
         },
         {
-            type: "number",
+            type: "integer",
             name: "jour",
             description: "[Créer] Jour de la semaine",
             required: false,
@@ -62,7 +62,7 @@ module.exports = {
             ]
         },
         {
-            type: "number",
+            type: "integer",
             name: "intervalle",
             description: "[Créer/Modifier] Fréquence en semaines (1 = toutes les semaines, 2 = 1/2)",
             required: false
@@ -86,7 +86,7 @@ module.exports = {
             required: false
         },
         {
-            type: "number",
+            type: "integer",
             name: "event_id",
             description: "[Delete/Pause/Skip/Edit] ID de l'événement concerné",
             required: false
