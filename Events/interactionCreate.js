@@ -7,9 +7,28 @@ module.exports = async (client, interaction) => {
         let entry = interaction.options.getFocused()
 
         if (interaction.commandName === "help") {
+            const focusedOption = interaction.options.getFocused(true);
 
-            let choices = client.commands.filter(cmd => cmd.name.includes(entry))
-            await interaction.respond(entry === "" ? client.commands.map(cmd => ({ name: cmd.name, value: cmd.name })) : choices.map(choice => ({ name: choice.name, value: choice.name })))
+            // Autocomplétion de l'option "commande"
+            if (focusedOption.name === "commande") {
+                let choices = client.commands.filter(cmd => cmd.name.toLowerCase().includes(entry.toLowerCase()));
+                let results = entry === ""
+                    ? client.commands.map(cmd => ({ name: cmd.name, value: cmd.name }))
+                    : choices.map(choice => ({ name: choice.name, value: choice.name }));
+
+                await interaction.respond(results.slice(0, 25));
+            }
+
+            // Autocomplétion de l'option "categorie"
+            if (focusedOption.name === "categorie") {
+                let categories = [...new Set(client.commands.map(cmd => cmd.category))];
+                let choices = categories.filter(cat => cat && cat.toLowerCase().includes(entry.toLowerCase()));
+                let results = entry === ""
+                    ? categories.map(cat => ({ name: cat, value: cat }))
+                    : choices.map(choice => ({ name: choice, value: choice }));
+
+                await interaction.respond(results.slice(0, 25));
+            }
         }
 
         if (interaction.commandName === "addworktime") {
