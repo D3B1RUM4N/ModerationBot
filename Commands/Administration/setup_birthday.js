@@ -88,7 +88,7 @@ module.exports = {
         });
 
         return message.reply({
-            content: `⚙️ **Configuration Anniversaire mise à jour :**\n• Statut : **${updatedConfig.enabled ? "Activé ✅" : "Désactivé ❌"}**\n• Salon : ${updatedConfig.channelID ? `<#${updatedConfig.channelID}>` : "Non défini"}\n• Heure d'envoi : **${updatedConfig.birthdayTime}**\n• Rôle à pinger : ${updatedConfig.roleID ? `<@&${updatedConfig.roleID}>` : "Aucun"}`
+            content: `⚙️ **Configuration Anniversaire mise à jour :**\n• Statut : **${updatedConfig.enabled ? "Activé ✅" : "Désactivé ❌"}**\n• Salon : ${updatedConfig.channelID ? `<#${updatedConfig.channelID}>` : "Non défini"}\n• Heure d'envoi : **${updatedConfig.birthdayTime}**\n• Rôle à pinger : ${updatedConfig.roleID ? `<&${updatedConfig.roleID}>` : "Aucun"}`
         });
     }
 };

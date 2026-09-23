@@ -2,17 +2,13 @@ const cron = require('node-cron');
 const Discord = require('discord.js');
 const logs = require('./log.js');
 
-// Cache en mémoire des anniversaires du jour
 let todayBirthdays = [];
 
-/**
- * Recharche la liste des anniversaires du jour depuis la BDD
- */
 async function loadTodayBirthdays(db) {
     try {
         const now = new Date();
         const currentDay = now.getDate();
-        const currentMonth = now.getMonth() + 1; // JS les mois vont de 0 à 11
+        const currentMonth = now.getMonth() + 1;
 
         todayBirthdays = await db.userBirthday.findMany({
             where: {
@@ -27,9 +23,6 @@ async function loadTodayBirthdays(db) {
     }
 }
 
-/**
- * Permet d'injecter un anniversaire en cache à la volée (si saisie le jour même)
- */
 function addBirthdayToCache(userID, day, month) {
     const now = new Date();
     if (day === now.getDate() && month === (now.getMonth() + 1)) {
@@ -39,19 +32,13 @@ function addBirthdayToCache(userID, day, month) {
     }
 }
 
-/**
- * Initialise le planificateur
- */
 function initBirthdayScheduler(client, db) {
-    // 1. Chargement initial au démarrage du bot
     loadTodayBirthdays(db);
 
-    // 2. Rechargement automatique chaque jour à 00:01
     cron.schedule('1 0 * * *', () => {
         loadTodayBirthdays(db);
     });
 
-    // 3. Vérification uniquement à chaque heure pile (ex: 08:00, 09:00, 10:00...)
     cron.schedule('0 * * * *', async () => {
         if (todayBirthdays.length === 0) return;
 
@@ -60,7 +47,6 @@ function initBirthdayScheduler(client, db) {
         const currentTime = `${currentHours}:00`;
 
         try {
-            // Récupère les serveurs où la fonctionnalité est active pour cette heure
             const activeConfigs = await db.serverBirthdayConfig.findMany({
                 where: {
                     enabled: true,
@@ -78,24 +64,31 @@ function initBirthdayScheduler(client, db) {
                 if (!channel) continue;
 
                 for (const bday of todayBirthdays) {
-                    // Vérifie si le membre fait partie du serveur
                     const member = await guild.members.fetch(bday.userID).catch(() => null);
                     if (!member) continue;
 
-                    // Construction du message / Embed
-                    const defaultMsg = `🎂 Aujourd'hui c'est l'anniversaire de <@${member.id}> ! Bon anniversaire ! 🎉`;
-                    const customMessage = config.birthdayMessage
-                        ? config.birthdayMessage.replace('{user}', `<@${member.id}>`)
-                        : defaultMsg;
+                    // Création de la description avec le saut de ligne
+                    let embedDescription = `Aujourd'hui c'est l'anniversaire à ${member} !`;
+                    if (config.birthdayMessage) {
+                        const customPart = config.birthdayMessage.replace(/{user}/g, `${member}`);
+                        embedDescription += `\n\n${customPart}`;
+                    }
 
                     const embed = new Discord.EmbedBuilder()
-                        .setTitle("🎉 Joyeux Anniversaire !")
-                        .setDescription(customMessage)
+                        .setTitle(`🎉 Joyeux anniversaire ${member.user.username}`)
+                        .setDescription(embedDescription)
                         .setColor(client.color || "#FF00FF")
                         .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
                         .setTimestamp();
 
-                    const content = config.roleID ? `<@&${config.roleID}>` : null;
+                    let content = null;
+                    if (config.roleID) {
+                        if (config.roleID === guild.id || (guild.roles.everyone && config.roleID === guild.roles.everyone.id)) {
+                            content = "@everyone";
+                        } else {
+                            content = `<@&${config.roleID}>`;
+                        }
+                    }
 
                     await channel.send({ content, embeds: [embed] });
                     logs.log(`[Birthday] Anniversaire de ${member.user.tag} fêté sur ${guild.name}`);
