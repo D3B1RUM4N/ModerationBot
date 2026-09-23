@@ -11,8 +11,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//npx prisma db push
-// npx prisma migrate dev --name 
+// Développement : npx prisma migrate dev
+// Production : npx prisma db push
+// N'oublie pas de régénérer le client ensuite : npx prisma generate
 
 model Server {
   serverID   String       @id
@@ -24,9 +25,10 @@ model Server {
   Experience Experience[]
   Ticket     Ticket[]
 
-  WorkTime        WorkTime[]
-  banChannels     BanChannel[]
-  scheduledEvents ScheduledEvent[]
+  WorkTime             WorkTime[]
+  banChannels          BanChannel[]
+  scheduledEvents      ScheduledEvent[]
+  ServerBirthdayConfig ServerBirthdayConfig?
 }
 
 model Welcome {
@@ -118,4 +120,22 @@ model ScheduledEvent {
 
   // RELATION AVEC SERVER
   server Server @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+}
+
+// Table 1:1 liée à Server (Configuration par serveur)
+model ServerBirthdayConfig {
+  serverID        String  @id
+  enabled         Boolean @default(false)
+  channelID       String?
+  roleID          String?
+  birthdayTime    String  @default("09:00") // Format HH:mm
+  birthdayMessage String? @db.Text
+  server          Server  @relation(fields: [serverID], references: [serverID], onDelete: Cascade)
+}
+
+// Table Globale (Membres)
+model UserBirthday {
+  userID String @id
+  day    Int // Jour (1 - 31)
+  month  Int // Mois (1 - 12)
 }
